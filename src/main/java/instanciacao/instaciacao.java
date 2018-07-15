@@ -5,9 +5,6 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,6 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import dominio.Artista;
 import dominio.Filme;
 import dominio.Participacao;
+import servico.ArtistaServico;
+import servico.FilmeServico;
+import servico.ParticipacaoServico;
 
 
 @WebServlet("/Instanciacao")
@@ -44,26 +44,23 @@ public class instaciacao extends HttpServlet {
 			Participacao p3 = new Participacao(null, "Rose", new BigDecimal("1000000.00"), f2, a3);
 			Participacao p4 = new Participacao(null, "Hepburn", new BigDecimal("5000000.00"), f1, a2);
 			
-			EntityManagerFactory emf = Persistence.createEntityManagerFactory("meujpa");
-			EntityManager em = emf.createEntityManager();
+			ArtistaServico as = new ArtistaServico();
+			FilmeServico fs = new FilmeServico();
+			ParticipacaoServico ps = new ParticipacaoServico();
 			
-			em.getTransaction().begin();
 			
-			em.persist(f1);
-			em.persist(f2);
-			em.persist(a1);
-			em.persist(a2);
-			em.persist(a3);
-			em.persist(p1);
-			em.persist(p2);
-			em.persist(p3);
-			em.persist(p4);
+			fs.inserirAtualizar(f1);
+			fs.inserirAtualizar(f2);
 			
-			em.getTransaction().commit();
+			as.inserirAtualizar(a1);
+			as.inserirAtualizar(a2);
+			as.inserirAtualizar(a3);
 			
-			em.close();
-			emf.close();
-			
+			ps.inserirAtualizar(p1);
+			ps.inserirAtualizar(p2);
+			ps.inserirAtualizar(p3);
+			ps.inserirAtualizar(p4);
+						
 			
 			response.getWriter().append("Pronto ");
 
